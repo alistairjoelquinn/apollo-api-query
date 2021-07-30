@@ -1,12 +1,11 @@
-import { Person } from '@/models/api/graphql-data';
-import { ApolloServer, gql } from 'apollo-server-micro';
+const { ApolloServer, gql } = require('apollo-server-micro');
 
-const person: Person = {
+const person = {
     name: 'Alistair',
     job: 'React Developer',
 };
 
-const people: Person[] = [person];
+const people = [person];
 
 const typeDefs = gql`
     type Person {
@@ -31,7 +30,7 @@ const resolvers = {
     },
 
     Mutation: {
-        updateBook: (_1: void, args: Person) => {
+        updateBook: (parent, args) => {
             person.name = args.name;
             person.job = args.job;
             return person;
@@ -40,8 +39,6 @@ const resolvers = {
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
-
-server.start();
 
 const handler = server.createHandler({ path: '/api/graphql-data' });
 
