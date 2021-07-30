@@ -1,5 +1,5 @@
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/client/react';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 interface Props {
     data: any;
@@ -10,6 +10,7 @@ const Home: React.FC<Props> = ({ data }) => {
 
     const client = new ApolloClient({
         uri: 'http://localhost:3000/api/graphql-data',
+        cache: new InMemoryCache(),
     });
 
     return (
