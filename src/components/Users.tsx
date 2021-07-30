@@ -1,5 +1,4 @@
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 const GET_USERS = gql`
     query {
@@ -11,8 +10,8 @@ const GET_USERS = gql`
 `;
 
 const SET_USER = gql`
-    mutation UpdateBook($name: String!, $author: String!) {
-        updateBook(name: $name, author: $author) {
+    mutation UpdatePerson($name: String!, $job: String!) {
+        updatePerson(name: $name, job: $job) {
             name
             author
         }
