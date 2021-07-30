@@ -1,6 +1,8 @@
 import { ApolloProvider } from '@apollo/client/react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
+import Users from '@/components/Users';
+
 interface Props {
     data: any;
 }
@@ -16,7 +18,8 @@ const Home: React.FC<Props> = ({ data }) => {
     return (
         <ApolloProvider client={client}>
             <div>
-                <h1>NextJS GraphQL Apollo App</h1>
+                <h1>Nextjs / Typescript Graphql Apollo Queries</h1>
+                <Users />
             </div>
         </ApolloProvider>
     );

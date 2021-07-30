@@ -14,9 +14,7 @@ const typeDefs = gql`
     }
     type Query {
         person: Person!
-    }
-    type Query {
-        people(query: string): [Person!]!
+        people(query: String!): [Person!]!
     }
     type Mutation {
         updatePerson(name: String!, job: String!): Person!
