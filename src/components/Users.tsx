@@ -1,6 +1,6 @@
 import { useQuery, useMutation, gql } from '@apollo/client';
 
-const GET_USER = gql`
+const GET_USER_QUERY = gql`
     query {
         person {
             name
@@ -9,7 +9,7 @@ const GET_USER = gql`
     }
 `;
 
-const SET_USER = gql`
+const SET_USER_MUTATION = gql`
     mutation updatePerson($name: String!, $job: String!) {
         updatePerson(name: $name, job: $job) {
             name
@@ -19,9 +19,8 @@ const SET_USER = gql`
 `;
 
 const Users: React.FC = () => {
-    const { loading, error, data } = useQuery(GET_USER);
-
-    const [updatePerson] = useMutation(SET_USER);
+    const { loading, error, data } = useQuery(GET_USER_QUERY);
+    const [updatePerson] = useMutation(SET_USER_MUTATION, { refetchQueries: [{ query: GET_USER_QUERY }] });
 
     if (loading) return <p>Loading...</p>;
     if (error) {
