@@ -10,7 +10,7 @@ const GET_USER = gql`
 `;
 
 const SET_USER = gql`
-    mutation UpdatePerson($name: String!, $job: String!) {
+    mutation updatePerson($name: String!, $job: String!) {
         updatePerson(name: $name, job: $job) {
             name
             job

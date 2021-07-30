@@ -3,13 +3,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import Users from '@/components/Users';
 
-interface Props {
-    data: any;
-}
-
-const Home: React.FC<Props> = ({ data }) => {
-    console.log('data: ', data);
-
+const Home: React.FC = () => {
     const client = new ApolloClient({
         uri: 'http://localhost:3000/api/graphql',
         cache: new InMemoryCache(),

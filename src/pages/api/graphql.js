@@ -6,7 +6,6 @@ const person = {
 };
 
 const people = [person];
-// const url = 'http://localhost:3000/api/graphql-data';
 
 const typeDefs = gql`
     type Person {
@@ -30,6 +29,7 @@ const resolvers = {
 
     Mutation: {
         updatePerson: (parent, { name, job }) => {
+            console.log('name, job: ', name, job);
             const updatePerson = people.find((item) => item.name === name);
             updatePerson.job = job;
             return updatePerson;
