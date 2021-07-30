@@ -21,12 +21,7 @@ const SET_USER = gql`
 const Users: React.FC = () => {
     const { loading, error, data } = useQuery(GET_USER);
 
-    const [updatePerson] = useMutation(SET_USER, {
-        variables: {
-            person: 'Alistair',
-            job: 'Legend',
-        },
-    });
+    const [updatePerson] = useMutation(SET_USER);
 
     if (loading) return <p>Loading...</p>;
     if (error) {
@@ -40,7 +35,17 @@ const Users: React.FC = () => {
             <p>
                 {data.person.name} - {data.person.job}
             </p>
-            <button type="button" onClick={() => updatePerson()}>
+            <button
+                type="button"
+                onClick={() =>
+                    updatePerson({
+                        variables: {
+                            name: 'Alistair',
+                            job: 'Legend',
+                        },
+                    })
+                }
+            >
                 Update Person
             </button>
         </div>
