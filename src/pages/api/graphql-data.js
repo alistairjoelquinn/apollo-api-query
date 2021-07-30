@@ -30,10 +30,15 @@ const resolvers = {
     },
 
     Mutation: {
-        updateBook: (parent, args) => {
-            person.name = args.name;
-            person.job = args.job;
-            return person;
+        updatePerson: (parent, { name, job }) => {
+            const updatePerson = people.find((item) => item.name === name);
+            if (typeof name === 'string') {
+                updatePerson.name = name;
+            }
+            if (typeof job === 'string') {
+                updatePerson.job = job;
+            }
+            return updatePerson;
         },
     },
 };
