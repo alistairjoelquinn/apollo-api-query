@@ -1,7 +1,13 @@
 import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient, { gql } from 'apollo-boost';
+import ApolloClient from 'apollo-boost';
 
-const Home = ({ data }) => {
+interface Props {
+    data: any;
+}
+
+const Home: React.FC<Props> = ({ data }) => {
+    console.log('data: ', data);
+
     const client = new ApolloClient({
         uri: 'http://localhost:3000/api/graphql-data',
     });

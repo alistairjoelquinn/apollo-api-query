@@ -32,12 +32,7 @@ const resolvers = {
     Mutation: {
         updatePerson: (parent, { name, job }) => {
             const updatePerson = people.find((item) => item.name === name);
-            if (typeof name === 'string') {
-                updatePerson.name = name;
-            }
-            if (typeof job === 'string') {
-                updatePerson.job = job;
-            }
+            updatePerson.job = job;
             return updatePerson;
         },
     },
@@ -45,12 +40,4 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-const handler = server.createHandler({ path: '/api/graphql-data' });
-
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
-
-export default handler;
+module.exports = server.start().then(() => server.createHandler({ path: '/api/graphql-data' }));
