@@ -4,7 +4,7 @@ const GET_USERS = gql`
     query {
         people {
             name
-            author
+            job
         }
     }
 `;
@@ -13,7 +13,7 @@ const SET_USER = gql`
     mutation UpdatePerson($name: String!, $job: String!) {
         updatePerson(name: $name, job: $job) {
             name
-            author
+            job
         }
     }
 `;
@@ -21,24 +21,28 @@ const SET_USER = gql`
 const Users: React.FC = () => {
     const { loading, error, data } = useQuery(GET_USERS);
 
-    const [updateBook] = useMutation(SET_USER);
+    const [updatePerson] = useMutation(SET_USER);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
 
-    const updateBookDetails = () => {
-        updateBook({
-            variables: { name: 'A Spicy Sausage', author: 'Anton the Butcher' },
-        });
-    };
-
     return (
         <div>
             <p>
-                {data.book.name} - {data.book.author}
+                {data.person.name} - {data.person.job}
             </p>
-            <button type="button" onClick={updateBookDetails}>
-                Update Book
+            <button
+                type="button"
+                onClick={() =>
+                    updatePerson({
+                        variables: {
+                            person: 'Alistair',
+                            job: 'Legend',
+                        },
+                    })
+                }
+            >
+                Update Person
             </button>
         </div>
     );
