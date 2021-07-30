@@ -1,39 +1,47 @@
-import { MutationArgs } from '@/models/api/graphql-data';
+import { Person } from '@/models/api/graphql-data';
 import { ApolloServer, gql } from 'apollo-server-micro';
 
-const book = {
-    name: ' In Search of Lost Time',
-    author: 'Marcel Proust',
+const person: Person = {
+    name: 'Alistair',
+    job: 'React Developer',
 };
 
+const people: Person[] = [person];
+
 const typeDefs = gql`
-    type Book {
-        name: String
-        author: String
+    type Person {
+        name: String!
+        job: String!
     }
     type Query {
-        book: Book
+        person: Person!
+    }
+    type Query {
+        people(query: string): [Person!]!
     }
     type Mutation {
-        updateBook(name: String!, author: String!): Book
+        updatePerson(name: String!, job: String!): Person!
     }
 `;
 
 const resolvers = {
     Query: {
-        book: () => book,
+        person: () => person,
+        people: () => people,
     },
 
     Mutation: {
-        updateBook: (_1: void, args: MutationArgs) => {
-            book.name = args.name;
-            book.author = args.author;
-            return book;
+        updateBook: (_1: void, args: Person) => {
+            person.name = args.name;
+            person.job = args.job;
+            return person;
         },
     },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
+
+server.start();
 
 const handler = server.createHandler({ path: '/api/graphql-data' });
 

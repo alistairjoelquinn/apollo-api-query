@@ -1,16 +1,20 @@
-import Head from 'next/head';
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient, { gql } from 'apollo-boost';
+import BookInfo from '@/components/BookInfo';
 
-const Home: React.FC = () => (
-    <div>
-        <Head>
-            <title>Alistair Quinn Next Typescript Template</title>
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
+const Home = ({ data }) => {
+    const client = new ApolloClient({
+        uri: 'http://localhost:3000/api/graphql-data',
+    });
 
-        <main>
-            <div>Nextjs / Typescript template body</div>
-        </main>
-    </div>
-);
+    return (
+        <ApolloProvider client={client}>
+            <div>
+                <h1>NextJS GraphQL Apollo App</h1>
+                <BookInfo />
+            </div>
+        </ApolloProvider>
+    );
+};
 
 export default Home;

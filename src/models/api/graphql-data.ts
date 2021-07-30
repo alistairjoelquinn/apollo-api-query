@@ -1,4 +1,4 @@
-export interface MutationArgs {
+export interface Person {
     name: string;
-    author: string;
+    job: string;
 }
