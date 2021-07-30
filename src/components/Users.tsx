@@ -1,8 +1,8 @@
 import { useQuery, useMutation, gql } from '@apollo/client';
 
-const GET_USERS = gql`
+const GET_USER = gql`
     query {
-        people {
+        person {
             name
             job
         }
@@ -19,9 +19,14 @@ const SET_USER = gql`
 `;
 
 const Users: React.FC = () => {
-    const { loading, error, data } = useQuery(GET_USERS);
+    const { loading, error, data } = useQuery(GET_USER);
 
-    const [updatePerson] = useMutation(SET_USER);
+    const [updatePerson] = useMutation(SET_USER, {
+        variables: {
+            person: 'Alistair',
+            job: 'Legend',
+        },
+    });
 
     if (loading) return <p>Loading...</p>;
     if (error) {
@@ -35,17 +40,7 @@ const Users: React.FC = () => {
             <p>
                 {data.person.name} - {data.person.job}
             </p>
-            <button
-                type="button"
-                onClick={() =>
-                    updatePerson({
-                        variables: {
-                            person: 'Alistair',
-                            job: 'Legend',
-                        },
-                    })
-                }
-            >
+            <button type="button" onClick={() => updatePerson()}>
                 Update Person
             </button>
         </div>

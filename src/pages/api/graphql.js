@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server-micro');
+import { ApolloServer, gql } from "apollo-server-micro";
 
 const person = {
     name: 'Alistair',
@@ -6,6 +6,7 @@ const person = {
 };
 
 const people = [person];
+// const url = 'http://localhost:3000/api/graphql-data';
 
 const typeDefs = gql`
     type Person {
@@ -38,4 +39,31 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-module.exports = server.start().then(() => server.createHandler({ path: '/api/graphql-data' }));
+const startServer = server.start()
+
+export default async function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    res.setHeader(
+        'Access-Control-Allow-Origin',
+        'https://studio.apollographql.com'
+    )
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
+    if (req.method === 'OPTIONS') {
+        res.end()
+        return false
+    }
+
+    await startServer
+    await server.createHandler({
+        path: '/api/graphql',
+    })(req, res)
+}
+
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+}
