@@ -3,7 +3,7 @@ import schema from './schema.graphql';
 
 const users = [{
     id: 1,
-    name: 'Alistair',
+    name: 'Alistair Quinn',
     email: 'al@example.com',
     age: 36,
     job: 'React Developer',
@@ -13,12 +13,22 @@ const resolvers = {
     Query: {
         users: () => users,
     },
-
     Mutation: {
-        updateUser: (parent, { name, job }) => {
-            console.log('name, job: ', name, job);
-            const updatePerson = people.find((item) => item.name === name);
-            updatePerson.job = job;
+        updateUser: (parent, args) => {
+            console.log('args: ', args);
+            const updatePerson = people.find((item) => item.id === args.id);
+            if (args.job) {
+                updatePerson.job = args.job;
+            }
+            if (args.name) {
+                updatePerson.name = args.name;
+            }
+            if (args.email) {
+                updatePerson.email = args.email;
+            }
+            if (args.age) {
+                updatePerson.age = args.age;
+            }
             return updatePerson;
         },
     },

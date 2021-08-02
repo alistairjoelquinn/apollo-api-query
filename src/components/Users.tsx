@@ -1,4 +1,17 @@
 import { useQuery, useMutation, gql } from '@apollo/client';
+import styled from 'styled-components';
+
+const SingleUserStyles = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 30vw;
+    p {
+        margin: 0;
+    }
+`;
 
 const GET_USER_QUERY = gql`
     query {
@@ -12,11 +25,14 @@ const GET_USER_QUERY = gql`
     }
 `;
 
-const SET_USER_MUTATION = gql`
-    mutation updatePerson($name: String!, $job: String!) {
+const UPDATE_USER_MUTATION = gql`
+    mutation updateUser($name: String!, $job: String!) {
         updateUser(name: $name, job: $job) {
+            id
             name
             job
+            age
+            email
         }
     }
 `;
@@ -34,7 +50,7 @@ const Users: React.FC = () => {
     if (data) {
         console.log('data: ', data);
     }
-    const [updatePerson] = useMutation(SET_USER_MUTATION, { refetchQueries: [{ query: GET_USER_QUERY }] });
+    const [updateUser] = useMutation(UPDATE_USER_MUTATION, { refetchQueries: [{ query: GET_USER_QUERY }] });
 
     if (loading) return <p>Loading...</p>;
     if (error) {
@@ -46,7 +62,7 @@ const Users: React.FC = () => {
         <div>
             <h1>Users Component</h1>
             {data?.users.map((item: UserDataItem) => (
-                <div key={item.id}>
+                <SingleUserStyles key={item.id}>
                     <p>
                         <span>Name: </span>
                         <span>{item.name}</span>
@@ -59,15 +75,20 @@ const Users: React.FC = () => {
                         <span>Age: </span>
                         <span>{item.age}</span>
                     </p>
-                </div>
+                </SingleUserStyles>
             ))}
             <button
                 type="button"
                 onClick={() =>
-                    updatePerson({
+                    updateUser({
                         variables: {
-                            name: 'Alistair',
-                            job: 'Legend',
+                            id: 1,
+                            data: {
+                                name: 'Alistair The Great',
+                                job: 'Legend',
+                                email: 'al@me',
+                                age: 34,
+                            },
                         },
                     })
                 }
