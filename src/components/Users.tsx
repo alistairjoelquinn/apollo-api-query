@@ -11,7 +11,7 @@ const GET_USER_QUERY = gql`
 
 const SET_USER_MUTATION = gql`
     mutation updatePerson($name: String!, $job: String!) {
-        updatePerson(name: $name, job: $job) {
+        updateUser(name: $name, job: $job) {
             name
             job
         }

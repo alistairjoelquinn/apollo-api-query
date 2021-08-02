@@ -1,21 +1,21 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 import schema from './schema.graphql';
 
-const person = {
+const users = [{
+    id: 1,
     name: 'Alistair',
+    email: 'al@example.com',
+    age: 36,
     job: 'React Developer',
-};
-
-const people = [person];
+}];
 
 const resolvers = {
     Query: {
-        person: () => person,
-        people: () => people,
+        users: () => users,
     },
 
     Mutation: {
-        updatePerson: (parent, { name, job }) => {
+        updateUser: (parent, { name, job }) => {
             console.log('name, job: ', name, job);
             const updatePerson = people.find((item) => item.name === name);
             updatePerson.job = job;

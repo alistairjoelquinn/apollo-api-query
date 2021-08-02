@@ -16,15 +16,12 @@ type Mutation {
     deleteComment(id: ID!): Comment!
     updateComment(id: ID!, data: UpdateCommentInput!): Comment!
 }
-type Subscription {
-    comment(postId: ID!): CommentSubscriptionPayload!
-    post: PostSubscriptionPayload!
-}
 type User {
     id: ID!
     name: String!
     email: String!
     age: Int
+    job: String!
     posts: [Post!]!
     comments: [Comment!]!
 }
