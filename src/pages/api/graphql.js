@@ -2,7 +2,7 @@ import { ApolloServer, gql } from "apollo-server-micro";
 import schema from './schema.graphql';
 
 const users = [{
-    id: 1,
+    id: '1d',
     name: 'Alistair Quinn',
     email: 'al@example.com',
     age: 36,
@@ -15,19 +15,18 @@ const resolvers = {
     },
     Mutation: {
         updateUser: (parent, args) => {
-            console.log('args: ', args);
             const updatePerson = users.find((item) => item.id === args.id);
-            if (args.job) {
-                updatePerson.job = args.job;
+            if (typeof args.data.job === 'string') {
+                updatePerson.job = args.data.job;
             }
-            if (args.name) {
-                updatePerson.name = args.name;
+            if (typeof args.data.name === 'string') {
+                updatePerson.name = args.data.name;
             }
-            if (args.email) {
-                updatePerson.email = args.email;
+            if (typeof args.data.email === 'string') {
+                updatePerson.email = args.data.email;
             }
-            if (args.age) {
-                updatePerson.age = args.age;
+            if (typeof args.data.age !== undefined) {
+                updatePerson.age = args.data.age;
             }
             return updatePerson;
         },

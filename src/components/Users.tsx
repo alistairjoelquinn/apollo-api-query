@@ -82,7 +82,7 @@ const Users: React.FC = () => {
                 onClick={() =>
                     updateUser({
                         variables: {
-                            id: 1,
+                            id: '1d',
                             name: 'Alistair The Great',
                             job: 'Legend',
                             email: 'al@me',
