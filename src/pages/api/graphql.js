@@ -16,7 +16,7 @@ const resolvers = {
     Mutation: {
         updateUser: (parent, args) => {
             console.log('args: ', args);
-            const updatePerson = people.find((item) => item.id === args.id);
+            const updatePerson = users.find((item) => item.id === args.id);
             if (args.job) {
                 updatePerson.job = args.job;
             }

@@ -20,7 +20,7 @@ input CreateUserInput {
 }
 input UpdateUserInput {
     name: String
+    job: String
     email: String
     age: Int
-    job: String
 }

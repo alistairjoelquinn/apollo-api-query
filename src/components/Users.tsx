@@ -26,8 +26,8 @@ const GET_USER_QUERY = gql`
 `;
 
 const UPDATE_USER_MUTATION = gql`
-    mutation updateUser($name: String!, $job: String!) {
-        updateUser(name: $name, job: $job) {
+    mutation updateUser($id: ID!, $name: String!, $job: String!, $email: String!, $age: Int!) {
+        updateUser(id: $id, data: { name: $name, job: $job, email: $email, age: $age }) {
             id
             name
             job
@@ -83,12 +83,10 @@ const Users: React.FC = () => {
                     updateUser({
                         variables: {
                             id: 1,
-                            data: {
-                                name: 'Alistair The Great',
-                                job: 'Legend',
-                                email: 'al@me',
-                                age: 34,
-                            },
+                            name: 'Alistair The Great',
+                            job: 'Legend',
+                            email: 'al@me',
+                            age: 34,
                         },
                     })
                 }
