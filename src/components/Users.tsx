@@ -2,9 +2,12 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 
 const GET_USER_QUERY = gql`
     query {
-        person {
+        users {
+            id
             name
             job
+            age
+            email
         }
     }
 `;
@@ -18,8 +21,19 @@ const SET_USER_MUTATION = gql`
     }
 `;
 
+interface UserDataItem {
+    id: number;
+    name: string;
+    email: string;
+    age: number;
+    job: string;
+}
+
 const Users: React.FC = () => {
     const { loading, error, data } = useQuery(GET_USER_QUERY);
+    if (data) {
+        console.log('data: ', data);
+    }
     const [updatePerson] = useMutation(SET_USER_MUTATION, { refetchQueries: [{ query: GET_USER_QUERY }] });
 
     if (loading) return <p>Loading...</p>;
@@ -31,9 +45,22 @@ const Users: React.FC = () => {
     return (
         <div>
             <h1>Users Component</h1>
-            <p>
-                {data.person.name} - {data.person.job}
-            </p>
+            {data?.users.map((item: UserDataItem) => (
+                <div key={item.id}>
+                    <p>
+                        <span>Name: </span>
+                        <span>{item.name}</span>
+                    </p>
+                    <p>
+                        <span>Job: </span>
+                        <span>{item.job}</span>
+                    </p>
+                    <p>
+                        <span>Age: </span>
+                        <span>{item.age}</span>
+                    </p>
+                </div>
+            ))}
             <button
                 type="button"
                 onClick={() =>
