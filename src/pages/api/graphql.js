@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-micro";
+import schema from './schema.graphql';
 
 const person = {
     name: 'Alistair',
@@ -23,7 +24,7 @@ const resolvers = {
     },
 };
 
-const server = new ApolloServer({ typeDefs: './schema.graphql', resolvers });
+const server = new ApolloServer({ typeDefs: schema, resolvers });
 
 const startServer = server.start()
 
