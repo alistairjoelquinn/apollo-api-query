@@ -7,20 +7,6 @@ const person = {
 
 const people = [person];
 
-const typeDefs = gql`
-    type Person {
-        name: String!
-        job: String!
-    }
-    type Query {
-        person: Person!
-        people(query: String!): [Person!]!
-    }
-    type Mutation {
-        updatePerson(name: String!, job: String!): Person!
-    }
-`;
-
 const resolvers = {
     Query: {
         person: () => person,
@@ -37,7 +23,7 @@ const resolvers = {
     },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs: './schema.graphql', resolvers });
 
 const startServer = server.start()
 
